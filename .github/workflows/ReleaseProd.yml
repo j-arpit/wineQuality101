@@ -26,6 +26,6 @@ jobs:
       - name: Extract Run ID from runid.py
         id: get_run_id
         run: |
-          RUN_ID=$(grep -oP '(?<=run_id\s*=\s*["\'])[a-f0-9]{32}(?=["\'])' runid.py)
+          RUN_ID=$(python -c "import runid; print(runid.run_id)")
           echo "Extracted RUN_ID: $RUN_ID"
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
