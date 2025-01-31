@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: ReleaseProd
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "release" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  release-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Extract Run ID from runid.py
+        id: get_run_id
+        run: |
+          RUN_ID=$(grep -oP '(?<=run_id\s*=\s*["\'])[a-f0-9]{32}(?=["\'])' runid.py)
+          echo "Extracted RUN_ID: $RUN_ID"
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
