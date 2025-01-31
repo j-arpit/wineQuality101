@@ -29,3 +29,18 @@ jobs:
           RUN_ID=$(python -c "import runid; print(runid.run_id)")
           echo "Extracted RUN_ID: $RUN_ID"
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+
+      - name: ssh proxy command
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          proxy_host: ${{ secrets.PROXY_SERVER }}
+          proxy_username: ${{ secrets.USERNAME }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
+          proxy_port: ${{ secrets.PORT }}
+          script: |
+            mkdir -P abc/def
+            ls -al
