@@ -43,4 +43,4 @@ jobs:
           proxy_port: ${{ secrets.PORT }}
           script: |
             cd IoTSense-Mlops-Framework/TemplateDeploy
-            ./launch_server.sh $RUN_ID
+            echo ./launch_server.sh $RUN_ID
